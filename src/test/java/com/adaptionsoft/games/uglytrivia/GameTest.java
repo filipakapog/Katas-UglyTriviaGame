@@ -1,11 +1,10 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -30,10 +29,32 @@ class GameTest {
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
-    void add_playerNameIsEmpty_throwsException(String name) {
-        Game game = Game.newGame(List.of("Player1", "Player2"));
+    @MethodSource
+    void aGameHavingPlayerNamesEmpty_throwsException(List<String> playerNames) {
+        Throwable exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> Game.newGame(playerNames)
+        );
+        assertEquals("Name should not be blank", exception.getMessage());
+    }
 
-        assertThrows(IllegalArgumentException.class, () -> game.add(name));
+    private static Stream<List<String>> aGameHavingPlayerNamesEmpty_throwsException() {
+        return Stream.of(
+                List.of("", ""),
+                List.of("Player1", ""),
+                List.of("", "Player 1"),
+                List.of("   ", " \t\n "),
+                nullableElementsList(null, null),
+                nullableElementsList("Player", null),
+                nullableElementsList(null, "Player")
+        );
+    }
+
+    private static List<String> nullableElementsList(String ... nullableElements) {
+        List<String> result = new LinkedList<>();
+        for (String nullableElement : nullableElements) {
+            result.add(nullableElement);
+        }
+        return result;
     }
 }

@@ -11,11 +11,7 @@ public class GameRunner {
 	private static boolean notAWinner;
 
 	public static void main(String[] args) {
-		Game aGame = Game.newGame(List.of("Player1", "Player2"));
-		
-		aGame.add("Chet");
-		aGame.add("Pat");
-		aGame.add("Sue");
+		Game aGame = Game.newGame(List.of("Chet", "Pat", "Sue"));
 		
 		Random rand = new Random();
 	

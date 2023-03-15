@@ -46,13 +46,9 @@ public class Game {
 		return "Rock Question " + index;
 	}
 
-	public boolean isPlayable() {
-		return (howManyPlayers() >= 2);
-	}
-
-	public void add(String playerName) {
+	private void add(String playerName) {
 		if (null == playerName || playerName.isBlank()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Name should not be blank");
 		}
 
 	    players.add(playerName);
