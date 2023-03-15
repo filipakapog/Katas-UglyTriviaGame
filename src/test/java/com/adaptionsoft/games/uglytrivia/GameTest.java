@@ -11,7 +11,7 @@ class GameTest {
 
     @Test
     void aGameMustHaveAtLeastTwoPlayers() {
-        Game game = new Game("Player1", "Player2");
+        Game game = Game.basicGame("Player1", "Player2");
 
         assertEquals(2, game.howManyPlayers());
     }
@@ -19,7 +19,7 @@ class GameTest {
     @ParameterizedTest
     @NullAndEmptySource
     void add_playerNameIsEmpty_throwsException(String name) {
-        Game game = new Game("Player1", "Player2");
+        Game game = Game.basicGame("Player1", "Player2");
 
         assertThrows(IllegalArgumentException.class, () -> game.add(name));
     }

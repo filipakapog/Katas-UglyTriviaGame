@@ -13,29 +13,31 @@ public class Game {
     LinkedList scienceQuestions = new LinkedList();
     LinkedList sportsQuestions = new LinkedList();
     LinkedList rockQuestions = new LinkedList();
-    
-    int currentPlayer = 0;
-    boolean isGettingOutOfPenaltyBox;
+
+	int currentPlayer = 0;
+	boolean isGettingOutOfPenaltyBox;
 
 	/* A Game should have at least two players*/
-	private Game() {}
-
-	public Game(String player1, String player2){
-		add(player1);
-		add(player2);
-
-    	for (int i = 0; i < 50; i++) {
+	private Game() {
+		for (int i = 0; i < 50; i++) {
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
 			rockQuestions.addLast(createRockQuestion(i));
-    	}
-    }
+		}
+	}
 
-	public String createRockQuestion(int index){
+	public static Game basicGame(String player1, String player2) {
+		Game basicGame = new Game();
+		basicGame.add(player1);
+		basicGame.add(player2);
+		return basicGame;
+	}
+
+	public String createRockQuestion(int index) {
 		return "Rock Question " + index;
 	}
-	
+
 	public boolean isPlayable() {
 		return (howManyPlayers() >= 2);
 	}
