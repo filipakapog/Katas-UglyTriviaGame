@@ -2,6 +2,7 @@ package com.adaptionsoft.games.uglytrivia;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
     ArrayList players = new ArrayList();
@@ -27,10 +28,17 @@ public class Game {
 		}
 	}
 
-	public static Game basicGame(String player1, String player2) {
+	public static Game newGame(List<String> playerNames) {
 		Game basicGame = new Game();
-		basicGame.add(player1);
-		basicGame.add(player2);
+
+		if (playerNames.size() < 2) {
+			throw new IllegalArgumentException("We need at least two players");
+		}
+
+		for (String playerName : playerNames) {
+			basicGame.add(playerName);
+		}
+
 		return basicGame;
 	}
 
