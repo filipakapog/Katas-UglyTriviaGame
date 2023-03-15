@@ -16,8 +16,14 @@ public class Game {
     
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
-    
-    public  Game(){
+
+	/* A Game should have at least two players*/
+	private Game() {}
+
+	public Game(String player1, String player2){
+		add(player1);
+		add(player2);
+
     	for (int i = 0; i < 50; i++) {
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));

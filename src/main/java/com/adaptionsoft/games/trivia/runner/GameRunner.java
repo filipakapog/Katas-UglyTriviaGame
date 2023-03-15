@@ -10,7 +10,7 @@ public class GameRunner {
 	private static boolean notAWinner;
 
 	public static void main(String[] args) {
-		Game aGame = new Game();
+		Game aGame = new Game("Player1", "Player2");
 		
 		aGame.add("Chet");
 		aGame.add("Pat");
