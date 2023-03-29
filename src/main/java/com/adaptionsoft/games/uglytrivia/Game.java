@@ -13,37 +13,13 @@ public class Game {
 	List<Integer> purses = new ArrayList<>();
 	List<Boolean> inPenaltyBox = new ArrayList<>();
 
-	LinkedList<String> popQuestions = new LinkedList<>();
-	LinkedList<String> scienceQuestions = new LinkedList<>();
-	LinkedList<String> sportsQuestions = new LinkedList<>();
-	LinkedList<String> rockQuestions = new LinkedList<>();
+	GameQuestions gameQuestions;
 
 	int currentPlayer = 0;
 	boolean isGettingOutOfPenaltyBox;
 
 	private Game() {
-		for (int i = 0; i < 50; i++) {
-			popQuestions.addLast(createPopQuestion(i));
-			scienceQuestions.addLast(createScienceQuestion(i));
-			sportsQuestions.addLast(createSportsQuestion(i));
-			rockQuestions.addLast(createRockQuestion(i));
-		}
-	}
-
-	private static String createPopQuestion(int index) {
-		return "Pop Question " + index;
-	}
-
-	private String createScienceQuestion(int index) {
-		return "Science Question " + index;
-	}
-
-	private String createSportsQuestion(int index) {
-		return "Sports Question " + index;
-	}
-
-	public String createRockQuestion(int index) {
-		return "Rock Question " + index;
+		gameQuestions = new GameQuestions(50);
 	}
 
 	public static Game newGame(List<String> playerNames) {
@@ -140,16 +116,15 @@ public class Game {
 
 	private void askQuestion() {
 		if (currentCategory() == "Pop")
-			System.out.println(popQuestions.removeFirst());
+			System.out.println(gameQuestions.drawAPopQuestion());
 		if (currentCategory() == "Science")
-			System.out.println(scienceQuestions.removeFirst());
+			System.out.println(gameQuestions.drawAScienceQuestion());
 		if (currentCategory() == "Sports")
-			System.out.println(sportsQuestions.removeFirst());
+			System.out.println(gameQuestions.drawASportsQuestion());
 		if (currentCategory() == "Rock")
-			System.out.println(rockQuestions.removeFirst());		
+			System.out.println(gameQuestions.drawARockQuestion());
 	}
-	
-	
+
 	private String currentCategory() {
 		if (places.get(currentPlayer) == 0) return "Pop";
 		if (places.get(currentPlayer) == 4) return "Pop";
