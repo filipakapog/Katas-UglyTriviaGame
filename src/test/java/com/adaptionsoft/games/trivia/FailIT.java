@@ -8,6 +8,6 @@ public class FailIT {
 
     @Test
     void failureTest() {
-        fail();
+        fail("Something Bad happen");
     }
 }
