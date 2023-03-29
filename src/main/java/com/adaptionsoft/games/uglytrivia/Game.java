@@ -10,7 +10,7 @@ public class Game {
 	List<String> players = new ArrayList<>();
 	List<Integer> places = new ArrayList<>();
 	List<Integer> purses = new ArrayList<>();
-	boolean[] inPenaltyBox = new boolean[6];
+	List<Boolean> inPenaltyBox = new ArrayList<>();
 
 	LinkedList<String> popQuestions = new LinkedList<>();
 	LinkedList<String> scienceQuestions = new LinkedList<>();
@@ -32,15 +32,39 @@ public class Game {
 	public static Game newGame(List<String> playerNames) {
 		Game basicGame = new Game();
 
+		checkIfMinimumNumberOfPlayers(playerNames);
+		addPlayersInGame(basicGame, playerNames);
+		initGame(basicGame);
+
+		return basicGame;
+	}
+
+	private static void checkIfMinimumNumberOfPlayers(List<String> playerNames) {
 		if (playerNames.size() < 2) {
 			throw new IllegalArgumentException("We need at least two players");
 		}
+	}
 
+	private static void addPlayersInGame(Game basicGame, List<String> playerNames) {
 		for (String playerName : playerNames) {
 			basicGame.add(playerName);
 		}
+	}
 
-		return basicGame;
+	private static void initGame(Game game) {
+		game.places = new ArrayList<>(howManyPlayers(game));
+		game.purses = new ArrayList<>(howManyPlayers(game));
+		game.inPenaltyBox = new ArrayList<>(howManyPlayers(game));
+
+		for (int i = 0; i < howManyPlayers(game); i++) {
+			game.places.add(0);
+			game.purses.add(0);
+			game.inPenaltyBox.add(false);
+		}
+	}
+
+	private static int howManyPlayers(Game game) {
+		return game.players.size();
 	}
 
 	public String createRockQuestion(int index) {
@@ -53,21 +77,16 @@ public class Game {
 		}
 
 	    players.add(playerName);
-	    inPenaltyBox[howManyPlayers()] = false;
 	    
 	    System.out.println(playerName + " was added");
 	    System.out.println("They are player number " + players.size());
-	}
-	
-	public int howManyPlayers() {
-		return players.size();
 	}
 
 	public void roll(int roll) {
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
-		
-		if (inPenaltyBox[currentPlayer]) {
+
+		if (inPenaltyBox.get(currentPlayer)) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
@@ -125,7 +144,7 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (inPenaltyBox[currentPlayer]){
+		if (inPenaltyBox.get(currentPlayer)) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 				purses.set(currentPlayer, purses.get(currentPlayer) + 1);
@@ -133,7 +152,7 @@ public class Game {
 						+ " now has "
 						+ purses.get(currentPlayer)
 						+ " Gold Coins.");
-				
+
 				boolean winner = didPlayerWin();
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
@@ -166,8 +185,8 @@ public class Game {
 	
 	public boolean wrongAnswer(){
 		System.out.println("Question was incorrectly answered");
-		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
-		inPenaltyBox[currentPlayer] = true;
+		System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
+		inPenaltyBox.set(currentPlayer, true);
 		
 		currentPlayer++;
 		if (currentPlayer == players.size()) currentPlayer = 0;
