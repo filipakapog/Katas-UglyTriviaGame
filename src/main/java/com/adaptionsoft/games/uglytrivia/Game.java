@@ -81,7 +81,7 @@ public class Game {
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
-		if (inPenaltyBox.get(currentPlayer)) {
+		if (isCurrentUserInPenaltyBox()) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
@@ -110,7 +110,11 @@ public class Game {
 			System.out.println("The category is " + currentCategory());
 			askQuestion();
 		}
-		
+
+	}
+
+	private Boolean isCurrentUserInPenaltyBox() {
+		return inPenaltyBox.get(currentPlayer);
 	}
 
 	private void askQuestion() {
@@ -132,7 +136,7 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (inPenaltyBox.get(currentPlayer)) {
+		if (isCurrentUserInPenaltyBox()) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 				purses.set(currentPlayer, purses.get(currentPlayer) + 1);
