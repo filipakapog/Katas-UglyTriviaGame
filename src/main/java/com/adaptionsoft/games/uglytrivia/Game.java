@@ -123,16 +123,12 @@ public class Game {
 	}
 
 	private Category currentCategory() {
-		if (places.get(currentPlayer) == 0) return Category.POP;
-		if (places.get(currentPlayer) == 4) return Category.POP;
-		if (places.get(currentPlayer) == 8) return Category.POP;
-		if (places.get(currentPlayer) == 1) return Category.SCIENCE;
-		if (places.get(currentPlayer) == 5) return Category.SCIENCE;
-		if (places.get(currentPlayer) == 9) return Category.SCIENCE;
-		if (places.get(currentPlayer) == 2) return Category.SPORTS;
-		if (places.get(currentPlayer) == 6) return Category.SPORTS;
-		if (places.get(currentPlayer) == 10) return Category.SPORTS;
-		return Category.ROCK;
+		return switch (places.get(currentPlayer)) {
+			case 0, 4, 8 -> Category.POP;
+			case 1, 5, 9 -> Category.SCIENCE;
+			case 2, 6, 10 -> Category.SPORTS;
+			default -> Category.ROCK;
+		};
 	}
 
 	public boolean wasCorrectlyAnswered() {
