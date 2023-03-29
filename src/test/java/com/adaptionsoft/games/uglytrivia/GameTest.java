@@ -23,7 +23,6 @@ class GameTest {
         assertEquals("We need at least two players", exception.getMessage());
     }
 
-
     @Test
     void aGameWith7Players_isCreatedWithoutExceptions() {
         List<String> playerNames = NamesGenerator.generate7Names();
