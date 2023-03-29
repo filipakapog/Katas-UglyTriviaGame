@@ -5,8 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
-	ArrayList<String> players = new ArrayList<>();
-	int[] places = new int[6];
+	private static final int NR_OF_COINS_TO_END_THE_GAME = 6;
+
+	List<String> players = new ArrayList<>();
+	List<Integer> places = new ArrayList<>();
 	int[] purses = new int[6];
 	boolean[] inPenaltyBox = new boolean[6];
 
@@ -18,7 +20,6 @@ public class Game {
 	int currentPlayer = 0;
 	boolean isGettingOutOfPenaltyBox;
 
-	/* A Game should have at least two players*/
 	private Game() {
 		for (int i = 0; i < 50; i++) {
 			popQuestions.addLast("Pop Question " + i);
@@ -52,7 +53,6 @@ public class Game {
 		}
 
 	    players.add(playerName);
-	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
 	    
@@ -71,14 +71,14 @@ public class Game {
 		if (inPenaltyBox[currentPlayer]) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
-				
+
 				System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-				places[currentPlayer] = places[currentPlayer] + roll;
-				if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-				
-				System.out.println(players.get(currentPlayer) 
-						+ "'s new location is " 
-						+ places[currentPlayer]);
+				places.set(currentPlayer, places.get(currentPlayer) + roll);
+				if (places.get(currentPlayer) > 11) places.set(currentPlayer, places.get(currentPlayer) - 12);
+
+				System.out.println(players.get(currentPlayer)
+						+ "'s new location is "
+						+ places.get(currentPlayer));
 				System.out.println("The category is " + currentCategory());
 				askQuestion();
 			} else {
@@ -87,13 +87,13 @@ public class Game {
 				}
 			
 		} else {
-		
-			places[currentPlayer] = places[currentPlayer] + roll;
-			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-			
-			System.out.println(players.get(currentPlayer) 
-					+ "'s new location is " 
-					+ places[currentPlayer]);
+
+			places.set(currentPlayer, places.get(currentPlayer) + roll);
+			if (places.get(currentPlayer) > 11) places.set(currentPlayer, places.get(currentPlayer) - 12);
+
+			System.out.println(players.get(currentPlayer)
+					+ "'s new location is "
+					+ places.get(currentPlayer));
 			System.out.println("The category is " + currentCategory());
 			askQuestion();
 		}
@@ -113,15 +113,15 @@ public class Game {
 	
 	
 	private String currentCategory() {
-		if (places[currentPlayer] == 0) return "Pop";
-		if (places[currentPlayer] == 4) return "Pop";
-		if (places[currentPlayer] == 8) return "Pop";
-		if (places[currentPlayer] == 1) return "Science";
-		if (places[currentPlayer] == 5) return "Science";
-		if (places[currentPlayer] == 9) return "Science";
-		if (places[currentPlayer] == 2) return "Sports";
-		if (places[currentPlayer] == 6) return "Sports";
-		if (places[currentPlayer] == 10) return "Sports";
+		if (places.get(currentPlayer) == 0) return "Pop";
+		if (places.get(currentPlayer) == 4) return "Pop";
+		if (places.get(currentPlayer) == 8) return "Pop";
+		if (places.get(currentPlayer) == 1) return "Science";
+		if (places.get(currentPlayer) == 5) return "Science";
+		if (places.get(currentPlayer) == 9) return "Science";
+		if (places.get(currentPlayer) == 2) return "Sports";
+		if (places.get(currentPlayer) == 6) return "Sports";
+		if (places.get(currentPlayer) == 10) return "Sports";
 		return "Rock";
 	}
 
@@ -177,6 +177,6 @@ public class Game {
 
 
 	private boolean didPlayerWin() {
-		return !(purses[currentPlayer] == 6);
+		return !(purses[currentPlayer] == NR_OF_COINS_TO_END_THE_GAME);
 	}
 }
