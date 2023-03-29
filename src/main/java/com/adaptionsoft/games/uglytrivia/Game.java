@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
+
 	private static final int NR_OF_COINS_TO_END_THE_GAME = 6;
 
 	List<String> players = new ArrayList<>();
@@ -22,11 +23,27 @@ public class Game {
 
 	private Game() {
 		for (int i = 0; i < 50; i++) {
-			popQuestions.addLast("Pop Question " + i);
-			scienceQuestions.addLast(("Science Question " + i));
-			sportsQuestions.addLast(("Sports Question " + i));
+			popQuestions.addLast(createPopQuestion(i));
+			scienceQuestions.addLast(createScienceQuestion(i));
+			sportsQuestions.addLast(createSportsQuestion(i));
 			rockQuestions.addLast(createRockQuestion(i));
 		}
+	}
+
+	private static String createPopQuestion(int index) {
+		return "Pop Question " + index;
+	}
+
+	private String createScienceQuestion(int index) {
+		return "Science Question " + index;
+	}
+
+	private String createSportsQuestion(int index) {
+		return "Sports Question " + index;
+	}
+
+	public String createRockQuestion(int index) {
+		return "Rock Question " + index;
 	}
 
 	public static Game newGame(List<String> playerNames) {
@@ -72,10 +89,6 @@ public class Game {
 
 	private static int howManyPlayers(Game game) {
 		return game.players.size();
-	}
-
-	public String createRockQuestion(int index) {
-		return "Rock Question " + index;
 	}
 
 	private void add(String playerName) {
