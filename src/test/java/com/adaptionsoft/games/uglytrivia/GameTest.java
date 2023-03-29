@@ -56,6 +56,11 @@ class GameTest {
         assertEquals("Player names must be unique", exception.getMessage());
     }
 
+    @Test
+    void failureTest() {
+        fail();
+    }
+
     private static Stream<List<String>> aGameMustHaveUniquePlayersNames() {
         return Stream.of(
                 List.of("Player 1", "Player 1"),
