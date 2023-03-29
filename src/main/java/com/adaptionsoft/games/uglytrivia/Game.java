@@ -47,7 +47,14 @@ public class Game {
 
 	private static void addPlayersInGame(Game basicGame, List<String> playerNames) {
 		for (String playerName : playerNames) {
+			throwExceptionIfPlayerNameIsNotUnique(basicGame, playerName);
 			basicGame.add(playerName);
+		}
+	}
+
+	private static void throwExceptionIfPlayerNameIsNotUnique(Game basicGame, String playerName) {
+		if (basicGame.players.contains(playerName)) {
+			throw new IllegalArgumentException("Player names must be unique");
 		}
 	}
 

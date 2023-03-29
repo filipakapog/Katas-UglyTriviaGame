@@ -23,16 +23,16 @@ class GameTest {
         assertEquals("We need at least two players", exception.getMessage());
     }
 
+    private static Stream<List<String>> aGameMustHaveAtLeastTwoPlayers() {
+        return Stream.of(Collections.EMPTY_LIST, List.of("Player 1"));
+    }
+
     @Test
     void aGameWith7Players_isCreatedWithoutExceptions() {
         List<String> playerNames = NamesGenerator.generate7Names();
 
         Game game = Game.newGame(playerNames);
         assertNotNull(game);
-    }
-
-    private static Stream<List<String>> aGameMustHaveAtLeastTwoPlayers() {
-        return Stream.of(Collections.EMPTY_LIST, List.of("Player 1"));
     }
 
     @ParameterizedTest
@@ -43,6 +43,25 @@ class GameTest {
                 () -> Game.newGame(playerNames)
         );
         assertEquals("Name should not be blank", exception.getMessage());
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void aGameMustHaveUniquePlayersNames(List<String> playerNames) {
+        Throwable exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> Game.newGame(playerNames)
+        );
+
+        assertEquals("Player names must be unique", exception.getMessage());
+    }
+
+    private static Stream<List<String>> aGameMustHaveUniquePlayersNames() {
+        return Stream.of(
+                List.of("Player 1", "Player 1"),
+                List.of("Player 1", "Player 2", "Player 1"),
+                List.of("Player 2", "Player 1", "Player 1")
+        );
     }
 
     private static Stream<List<String>> aGameHavingPlayerNamesEmpty_throwsException() {
