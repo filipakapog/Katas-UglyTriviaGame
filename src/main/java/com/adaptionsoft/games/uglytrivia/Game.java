@@ -114,14 +114,12 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory() == Category.POP)
-			System.out.println(gameQuestions.drawAPopQuestion());
-		if (currentCategory() == Category.SCIENCE)
-			System.out.println(gameQuestions.drawAScienceQuestion());
-		if (currentCategory() == Category.SPORTS)
-			System.out.println(gameQuestions.drawASportsQuestion());
-		if (currentCategory() == Category.ROCK)
-			System.out.println(gameQuestions.drawARockQuestion());
+		switch (currentCategory()) {
+			case POP -> System.out.println(gameQuestions.drawAPopQuestion());
+			case ROCK -> System.out.println(gameQuestions.drawARockQuestion());
+			case SPORTS -> System.out.println(gameQuestions.drawASportsQuestion());
+			case SCIENCE -> System.out.println(gameQuestions.drawAScienceQuestion());
+		}
 	}
 
 	private Category currentCategory() {
