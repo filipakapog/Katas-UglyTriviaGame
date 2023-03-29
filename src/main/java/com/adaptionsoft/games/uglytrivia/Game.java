@@ -1,7 +1,6 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
@@ -115,27 +114,27 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory() == "Pop")
+		if (currentCategory() == Category.POP)
 			System.out.println(gameQuestions.drawAPopQuestion());
-		if (currentCategory() == "Science")
+		if (currentCategory() == Category.SCIENCE)
 			System.out.println(gameQuestions.drawAScienceQuestion());
-		if (currentCategory() == "Sports")
+		if (currentCategory() == Category.SPORTS)
 			System.out.println(gameQuestions.drawASportsQuestion());
-		if (currentCategory() == "Rock")
+		if (currentCategory() == Category.ROCK)
 			System.out.println(gameQuestions.drawARockQuestion());
 	}
 
-	private String currentCategory() {
-		if (places.get(currentPlayer) == 0) return "Pop";
-		if (places.get(currentPlayer) == 4) return "Pop";
-		if (places.get(currentPlayer) == 8) return "Pop";
-		if (places.get(currentPlayer) == 1) return "Science";
-		if (places.get(currentPlayer) == 5) return "Science";
-		if (places.get(currentPlayer) == 9) return "Science";
-		if (places.get(currentPlayer) == 2) return "Sports";
-		if (places.get(currentPlayer) == 6) return "Sports";
-		if (places.get(currentPlayer) == 10) return "Sports";
-		return "Rock";
+	private Category currentCategory() {
+		if (places.get(currentPlayer) == 0) return Category.POP;
+		if (places.get(currentPlayer) == 4) return Category.POP;
+		if (places.get(currentPlayer) == 8) return Category.POP;
+		if (places.get(currentPlayer) == 1) return Category.SCIENCE;
+		if (places.get(currentPlayer) == 5) return Category.SCIENCE;
+		if (places.get(currentPlayer) == 9) return Category.SCIENCE;
+		if (places.get(currentPlayer) == 2) return Category.SPORTS;
+		if (places.get(currentPlayer) == 6) return Category.SPORTS;
+		if (places.get(currentPlayer) == 10) return Category.SPORTS;
+		return Category.ROCK;
 	}
 
 	public boolean wasCorrectlyAnswered() {
