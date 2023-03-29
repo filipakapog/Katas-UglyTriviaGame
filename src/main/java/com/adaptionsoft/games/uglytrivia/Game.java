@@ -71,63 +71,79 @@ public class Game {
 			throw new IllegalArgumentException("Name should not be blank");
 		}
 
-	    players.add(playerName);
-	    
-	    System.out.println(playerName + " was added");
-	    System.out.println("They are player number " + players.size());
+		players.add(playerName);
+
+		print(playerName + " was added");
+		print("They are player number " + players.size());
+	}
+
+	private void print(String msg) {
+		System.out.println(msg);
 	}
 
 	public void roll(int roll) {
-		System.out.println(players.get(currentPlayer) + " is the current player");
-		System.out.println("They have rolled a " + roll);
+		print(getCurrentPlayer() + " is the current player");
+		print("They have rolled a " + roll);
 
-		if (isCurrentUserInPenaltyBox()) {
+		if (isCurrentPlayerInPenaltyBox()) {
 			if (roll % 2 != 0) {
-				isGettingOutOfPenaltyBox = true;
-
-				System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
+				currentPlayerGetsOutOfPenaltyBox();
+				print(getCurrentPlayer() + " is getting out of the penalty box");
 				places.set(currentPlayer, places.get(currentPlayer) + roll);
-				if (places.get(currentPlayer) > 11) places.set(currentPlayer, places.get(currentPlayer) - 12);
+				if (getCurrentPlayerPosition() > 11) places.set(currentPlayer, getCurrentPlayerPosition() - 12);
 
-				System.out.println(players.get(currentPlayer)
+				print(getCurrentPlayer()
 						+ "'s new location is "
-						+ places.get(currentPlayer));
-				System.out.println("The category is " + currentCategory());
+						+ getCurrentPlayerPosition());
+				print("The category is " + currentCategory());
 				askQuestion();
 			} else {
-				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-				isGettingOutOfPenaltyBox = false;
-				}
-			
+				print(getCurrentPlayer() + " is not getting out of the penalty box");
+				currentPlayerRemainsInPenaltyBox();
+			}
 		} else {
-
 			places.set(currentPlayer, places.get(currentPlayer) + roll);
-			if (places.get(currentPlayer) > 11) places.set(currentPlayer, places.get(currentPlayer) - 12);
+			if (getCurrentPlayerPosition() > 11) places.set(currentPlayer, getCurrentPlayerPosition() - 12);
 
-			System.out.println(players.get(currentPlayer)
+			print(getCurrentPlayer()
 					+ "'s new location is "
-					+ places.get(currentPlayer));
-			System.out.println("The category is " + currentCategory());
+					+ getCurrentPlayerPosition());
+			print("The category is " + currentCategory());
 			askQuestion();
 		}
-
 	}
 
-	private Boolean isCurrentUserInPenaltyBox() {
+	private void currentPlayerGetsOutOfPenaltyBox() {
+		isGettingOutOfPenaltyBox = true;
+	}
+
+	private void currentPlayerRemainsInPenaltyBox() {
+		isGettingOutOfPenaltyBox = false;
+	}
+
+	private Integer getCurrentPlayerPosition() {
+		return places.get(currentPlayer);
+	}
+
+	private String getCurrentPlayer() {
+		return players.get(currentPlayer);
+	}
+
+	private Boolean isCurrentPlayerInPenaltyBox() {
 		return inPenaltyBox.get(currentPlayer);
 	}
 
 	private void askQuestion() {
 		switch (currentCategory()) {
-			case POP -> System.out.println(gameQuestions.drawAPopQuestion());
-			case ROCK -> System.out.println(gameQuestions.drawARockQuestion());
-			case SPORTS -> System.out.println(gameQuestions.drawASportsQuestion());
-			case SCIENCE -> System.out.println(gameQuestions.drawAScienceQuestion());
+			case POP -> print(gameQuestions.drawAPopQuestion());
+			case ROCK -> print(gameQuestions.drawARockQuestion());
+			case SPORTS -> print(gameQuestions.drawASportsQuestion());
+			case SCIENCE -> print(gameQuestions.drawAScienceQuestion());
 		}
 	}
 
 	private Category currentCategory() {
-		return switch (places.get(currentPlayer)) {
+		return switch (getCurrentPlayerPosition()) {
 			case 0, 4, 8 -> Category.POP;
 			case 1, 5, 9 -> Category.SCIENCE;
 			case 2, 6, 10 -> Category.SPORTS;
@@ -136,55 +152,52 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (isCurrentUserInPenaltyBox()) {
+		if (isCurrentPlayerInPenaltyBox()) {
 			if (isGettingOutOfPenaltyBox) {
-				System.out.println("Answer was correct!!!!");
+				print("Answer was correct!!!!");
 				purses.set(currentPlayer, purses.get(currentPlayer) + 1);
-				System.out.println(players.get(currentPlayer)
+				print(getCurrentPlayer()
 						+ " now has "
 						+ purses.get(currentPlayer)
 						+ " Gold Coins.");
 
 				boolean winner = didPlayerWin();
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
-				
+				switchToNextPlayer();
 				return winner;
 			} else {
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
+				switchToNextPlayer();
 				return true;
 			}
-			
-			
-			
 		} else {
-
-			System.out.println("Answer was corrent!!!!");
+			print("Answer was corrent!!!!");
 			purses.set(currentPlayer, purses.get(currentPlayer) + 1);
-			System.out.println(players.get(currentPlayer)
+			print(getCurrentPlayer()
 					+ " now has "
 					+ purses.get(currentPlayer)
 					+ " Gold Coins.");
-			
+
 			boolean winner = didPlayerWin();
-			currentPlayer++;
-			if (currentPlayer == players.size()) currentPlayer = 0;
-			
+			switchToNextPlayer();
 			return winner;
 		}
 	}
-	
-	public boolean wrongAnswer(){
-		System.out.println("Question was incorrectly answered");
-		System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-		inPenaltyBox.set(currentPlayer, true);
-		
-		currentPlayer++;
-		if (currentPlayer == players.size()) currentPlayer = 0;
+
+	public boolean wrongAnswer() {
+		print("Question was incorrectly answered");
+		print(getCurrentPlayer() + " was sent to the penalty box");
+		placeCurrentPlayerInPenaltyBox();
+		switchToNextPlayer();
 		return true;
 	}
 
+	private void switchToNextPlayer() {
+		currentPlayer++;
+		if (currentPlayer == players.size()) currentPlayer = 0;
+	}
+
+	private void placeCurrentPlayerInPenaltyBox() {
+		inPenaltyBox.set(currentPlayer, true);
+	}
 
 	private boolean didPlayerWin() {
 		return !(purses.get(currentPlayer) == NR_OF_COINS_TO_END_THE_GAME);
