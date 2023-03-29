@@ -129,8 +129,8 @@ public class Game {
 		return players.get(currentPlayer);
 	}
 
-	private Boolean isCurrentPlayerInPenaltyBox() {
-		return inPenaltyBox.get(currentPlayer);
+	private boolean isCurrentPlayerInPenaltyBox() {
+		return Boolean.TRUE.equals(inPenaltyBox.get(currentPlayer));
 	}
 
 	private void askQuestion() {
