@@ -2,7 +2,6 @@ package com.adaptionsoft.games.trivia;
 
 
 import com.adaptionsoft.games.trivia.runner.GameRunner;
-import com.adaptionsoft.games.utils.TestResourcesFileReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -11,7 +10,7 @@ import java.util.Random;
 import static com.adaptionsoft.games.utils.TestResourcesFileReader.readAsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GoldenMaster {
+class GoldenMasterIT {
 
 	@Test
 	void masterIsMaster() {
