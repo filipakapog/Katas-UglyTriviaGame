@@ -200,6 +200,6 @@ public class Game {
 	}
 
 	private boolean didPlayerWin() {
-		return !(purses.get(currentPlayer) == NR_OF_COINS_TO_END_THE_GAME);
+		return purses.get(currentPlayer) != NR_OF_COINS_TO_END_THE_GAME;
 	}
 }
