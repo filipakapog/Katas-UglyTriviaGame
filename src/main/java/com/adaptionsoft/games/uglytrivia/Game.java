@@ -7,15 +7,15 @@ public class Game {
 
 	private static final int NR_OF_COINS_TO_END_THE_GAME = 6;
 
-	List<String> players = new ArrayList<>();
-	List<Integer> places = new ArrayList<>();
-	List<Integer> purses = new ArrayList<>();
-	List<Boolean> inPenaltyBox = new ArrayList<>();
+	private final List<String> players = new ArrayList<>();
+	private List<Integer> places = new ArrayList<>();
+	private List<Integer> purses = new ArrayList<>();
+	private List<Boolean> inPenaltyBox = new ArrayList<>();
 
-	GameQuestions gameQuestions;
+	private final GameQuestions gameQuestions;
 
-	int currentPlayer = 0;
-	boolean isGettingOutOfPenaltyBox;
+	private int currentPlayer = 0;
+	private boolean isGettingOutOfPenaltyBox;
 
 	private Game() {
 		gameQuestions = new GameQuestions(50);
