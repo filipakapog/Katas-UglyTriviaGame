@@ -129,6 +129,16 @@ public class Game {
 		return places.get(currentPlayer);
 	}
 
+	/* Used in tests*/
+	Integer getCurrentPlayerPositionTest() {
+		return getCurrentPlayerPosition();
+	}
+
+	/* Used in tests*/
+	void settCurrentPlayerPositionTest(int position) {
+		places.set(currentPlayer, position);
+	}
+
 	private String getCurrentPlayer() {
 		return players.get(currentPlayer);
 	}

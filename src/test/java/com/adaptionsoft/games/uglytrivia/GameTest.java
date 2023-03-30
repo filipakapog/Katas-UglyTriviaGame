@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -57,11 +59,43 @@ class GameTest {
     }
 
     @Test
-    void roll_currentPlayerOutsidePenaltyBoxAndPosition() {
-        List<String> playerNames = NamesGenerator.generate7Names();
+    void roll_currentPlayerOutsidePenaltyBoxAndInitialPositionIs0AndRollIs2_playerIsAdvancedNewPositionCategoryAndTheSportsQuestionArePrinted() {
+        // Given
+        Game game = Game.newGame(List.of("Joe", "Jane"));
+        Integer currentPlayerPosition = game.getCurrentPlayerPositionTest();
+        int diceValue = 2;
 
-        Game game = Game.newGame(playerNames);
-        assertNotNull(game);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(baos));
+
+        // When
+        game.roll(diceValue);
+
+        // Then
+        int newPlayerPosition = currentPlayerPosition + diceValue;
+        assertEquals(newPlayerPosition, game.getCurrentPlayerPositionTest());
+        assertPositionCategoryAndSportsQuestionArePrinted(baos);
+    }
+
+    private void assertPositionCategoryAndSportsQuestionArePrinted(ByteArrayOutputStream baos) {
+        assertTrue(baos.toString().contains("Joe's new location is 2"));
+        assertTrue(baos.toString().contains("The category is Sports"));
+        assertTrue(baos.toString().contains("Sports Question 0"));
+    }
+
+    @Test
+    void roll_currentPlayerOutsidePenaltyBoxInitialPositionIs11AndRollIs1_playerPositionIs0() {
+        // Given
+        Game game = Game.newGame(List.of("Joe", "Jane"));
+        game.settCurrentPlayerPositionTest(11);
+        int diceValue = 1;
+
+
+        // When
+        game.roll(diceValue);
+
+        // Then
+        assertEquals(0, game.getCurrentPlayerPositionTest());
     }
 
     private static Stream<List<String>> aGameMustHaveUniquePlayersNames() {
