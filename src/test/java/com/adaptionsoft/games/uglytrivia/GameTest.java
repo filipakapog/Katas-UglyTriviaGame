@@ -56,6 +56,14 @@ class GameTest {
         assertEquals("Player names must be unique", exception.getMessage());
     }
 
+    @Test
+    void roll_currentPlayerOutsidePenaltyBoxAndPosition() {
+        List<String> playerNames = NamesGenerator.generate7Names();
+
+        Game game = Game.newGame(playerNames);
+        assertNotNull(game);
+    }
+
     private static Stream<List<String>> aGameMustHaveUniquePlayersNames() {
         return Stream.of(
                 List.of("Player 1", "Player 1"),
@@ -78,9 +86,7 @@ class GameTest {
 
     private static List<String> nullableElementsList(String ... nullableElements) {
         List<String> result = new LinkedList<>();
-        for (String nullableElement : nullableElements) {
-            result.add(nullableElement);
-        }
+        Collections.addAll(result, nullableElements);
         return result;
     }
 }

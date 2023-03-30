@@ -89,8 +89,8 @@ public class Game {
 			if (roll % 2 != 0) {
 				currentPlayerGetsOutOfPenaltyBox();
 				print(getCurrentPlayer() + " is getting out of the penalty box");
-				places.set(currentPlayer, places.get(currentPlayer) + roll);
-				if (getCurrentPlayerPosition() > 11) places.set(currentPlayer, getCurrentPlayerPosition() - 12);
+				advanceCurrentPlayer(roll);
+				if (getCurrentPlayerPosition() > 11) advanceCurrentPlayer(-12);
 
 				print(getCurrentPlayer()
 						+ "'s new location is "
@@ -102,8 +102,8 @@ public class Game {
 				currentPlayerRemainsInPenaltyBox();
 			}
 		} else {
-			places.set(currentPlayer, places.get(currentPlayer) + roll);
-			if (getCurrentPlayerPosition() > 11) places.set(currentPlayer, getCurrentPlayerPosition() - 12);
+			advanceCurrentPlayer(roll);
+			if (getCurrentPlayerPosition() > 11) advanceCurrentPlayer(-12);
 
 			print(getCurrentPlayer()
 					+ "'s new location is "
@@ -111,6 +111,10 @@ public class Game {
 			print("The category is " + currentCategory());
 			askQuestion();
 		}
+	}
+
+	private void advanceCurrentPlayer(int nrOfStepsToAdvance) {
+		places.set(currentPlayer, getCurrentPlayerPosition() + nrOfStepsToAdvance);
 	}
 
 	private void currentPlayerGetsOutOfPenaltyBox() {
