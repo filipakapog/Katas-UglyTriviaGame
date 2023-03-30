@@ -50,6 +50,21 @@ public class Game {
 		}
 	}
 
+	private void add(String playerName) {
+		if (null == playerName || playerName.isBlank()) {
+			throw new IllegalArgumentException("Name should not be blank");
+		}
+
+		players.add(playerName);
+
+		print(playerName + " was added");
+		print("They are player number " + players.size());
+	}
+
+	private void print(String msg) {
+		System.out.println(msg);
+	}
+
 	private static void initGame(Game game) {
 		game.places = new ArrayList<>(howManyPlayers(game));
 		game.purses = new ArrayList<>(howManyPlayers(game));
@@ -66,51 +81,37 @@ public class Game {
 		return game.players.size();
 	}
 
-	private void add(String playerName) {
-		if (null == playerName || playerName.isBlank()) {
-			throw new IllegalArgumentException("Name should not be blank");
-		}
-
-		players.add(playerName);
-
-		print(playerName + " was added");
-		print("They are player number " + players.size());
-	}
-
-	private void print(String msg) {
-		System.out.println(msg);
-	}
-
 	public void roll(int roll) {
 		print(getCurrentPlayer() + " is the current player");
 		print("They have rolled a " + roll);
 
 		if (isCurrentPlayerInPenaltyBox()) {
-			if (roll % 2 != 0) {
-				currentPlayerGetsOutOfPenaltyBox();
-				print(getCurrentPlayer() + " is getting out of the penalty box");
-				advanceCurrentPlayer(roll);
-				if (getCurrentPlayerPosition() > 11) advanceCurrentPlayer(-12);
-
-				print(getCurrentPlayer()
-						+ "'s new location is "
-						+ getCurrentPlayerPosition());
-				print("The category is " + currentCategory());
-				askQuestion();
-			} else {
-				print(getCurrentPlayer() + " is not getting out of the penalty box");
-				currentPlayerRemainsInPenaltyBox();
-			}
+			advancePlayerIfDiceIsNotEven(roll);
 		} else {
-			advanceCurrentPlayer(roll);
-			if (getCurrentPlayerPosition() > 11) advanceCurrentPlayer(-12);
-
-			print(getCurrentPlayer()
-					+ "'s new location is "
-					+ getCurrentPlayerPosition());
-			print("The category is " + currentCategory());
-			askQuestion();
+			advancePlayer(roll);
 		}
+	}
+
+	private void advancePlayerIfDiceIsNotEven(int roll) {
+		if (roll % 2 != 0) {
+			currentPlayerGetsOutOfPenaltyBox();
+			print(getCurrentPlayer() + " is getting out of the penalty box");
+			advancePlayer(roll);
+		} else {
+			print(getCurrentPlayer() + " is not getting out of the penalty box");
+			currentPlayerRemainsInPenaltyBox();
+		}
+	}
+
+	private void advancePlayer(int roll) {
+		advanceCurrentPlayer(roll);
+		if (getCurrentPlayerPosition() > 11) advanceCurrentPlayer(-12);
+
+		print(getCurrentPlayer()
+				+ "'s new location is "
+				+ getCurrentPlayerPosition());
+		print("The category is " + currentCategory());
+		askQuestion();
 	}
 
 	private void advanceCurrentPlayer(int nrOfStepsToAdvance) {
