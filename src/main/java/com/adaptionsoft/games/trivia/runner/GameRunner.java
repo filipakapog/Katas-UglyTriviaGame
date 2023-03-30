@@ -6,7 +6,7 @@ import java.util.Random;
 import com.adaptionsoft.games.uglytrivia.Game;
 
 
-
+public class GameRunner {
 
 	private static boolean notAWinner;
 
