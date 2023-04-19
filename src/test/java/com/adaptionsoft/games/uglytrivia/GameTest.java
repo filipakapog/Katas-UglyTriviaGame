@@ -29,12 +29,15 @@ class GameTest {
         return Stream.of(Collections.EMPTY_LIST, List.of("Player 1"));
     }
 
-    @Test
-    void aGameWith7Players_isCreatedWithoutExceptions() {
-        List<String> playerNames = NamesGenerator.generate7Names();
 
-        Game game = Game.newGame(playerNames);
-        assertNotNull(game);
+    @Test
+    void aGameMustHaveAtMostSixPlayers() {
+        Throwable exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> Game.newGame(NamesGenerator.generate7Names())
+        );
+
+        assertEquals("We need at most six players", exception.getMessage());
     }
 
     @ParameterizedTest

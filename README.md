@@ -6,7 +6,7 @@ This is how the [initial code](https://github.com/jbrains/trivia/tree/master/jav
 
 # Some Implemented Requirements
 Regarding the requirements defined [here](https://github.com/victorrentea/kata-trivia-java), I've implemented the following:
-- [ ] The max number of players must be changed to 6
+- [x] The max number of players must be changed to 6
 - [ ] Add a new category of questions "Geography"
 - [x] There must be minimum 2 players to start the game
 - [x] The game must not start until all players are added. In other words, new players can't join after the game has started.

@@ -6,11 +6,12 @@ import java.util.List;
 public class Game {
 
 	private static final int NR_OF_COINS_TO_END_THE_GAME = 6;
+	private static final int MAX_NR_OF_PLAYERS = 6;
 
-	private final List<String> players = new ArrayList<>();
-	private List<Integer> places = new ArrayList<>();
-	private List<Integer> purses = new ArrayList<>();
-	private List<Boolean> inPenaltyBox = new ArrayList<>();
+	private final List<String> players = new ArrayList<>(MAX_NR_OF_PLAYERS);
+	private List<Integer> places = new ArrayList<>(MAX_NR_OF_PLAYERS);
+	private List<Integer> purses = new ArrayList<>(MAX_NR_OF_PLAYERS);
+	private List<Boolean> inPenaltyBox = new ArrayList<>(MAX_NR_OF_PLAYERS);
 
 	private final GameQuestions gameQuestions;
 
@@ -25,6 +26,7 @@ public class Game {
 		Game basicGame = new Game();
 
 		checkIfMinimumNumberOfPlayers(playerNames);
+		checkIfMaximumNumberOfPlayers(playerNames);
 		addPlayersInGame(basicGame, playerNames);
 		initGame(basicGame);
 
@@ -34,6 +36,12 @@ public class Game {
 	private static void checkIfMinimumNumberOfPlayers(List<String> playerNames) {
 		if (playerNames.size() < 2) {
 			throw new IllegalArgumentException("We need at least two players");
+		}
+	}
+
+	private static void checkIfMaximumNumberOfPlayers(List<String> playerNames) {
+		if (playerNames.size() > 6) {
+			throw new IllegalArgumentException("We need at most six players");
 		}
 	}
 
