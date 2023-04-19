@@ -74,21 +74,12 @@ public class Game {
 	}
 
 	private static void initGame(Game game) {
-		game.places = new ArrayList<>(howManyPlayers(game));
-		game.purses = new ArrayList<>(howManyPlayers(game));
-		game.inPenaltyBox = new ArrayList<>(howManyPlayers(game));
-
-		for (int i = 0; i < howManyPlayers(game); i++) {
+		for (int i = 0; i < MAX_NR_OF_PLAYERS; i++) {
 			game.places.add(0);
 			game.purses.add(0);
 			game.inPenaltyBox.add(false);
 		}
 	}
-
-	private static int howManyPlayers(Game game) {
-		return game.players.size();
-	}
-
 	public void roll(int roll) {
 		print(getCurrentPlayer() + " is the current player");
 		print("They have rolled a " + roll);
