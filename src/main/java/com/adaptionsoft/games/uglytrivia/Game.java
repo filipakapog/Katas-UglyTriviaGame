@@ -165,7 +165,7 @@ public class Game {
 		};
 	}
 
-	public boolean wasCorrectlyAnswered() {
+	public boolean questionCorrectlyAnswered() {
 		if (isCurrentPlayerInPenaltyBox()) {
 			if (isGettingOutOfPenaltyBox) {
 				print("Answer was correct!!!!");
@@ -200,7 +200,7 @@ public class Game {
 		purses.set(currentPlayer, purses.get(currentPlayer) + 1);
 	}
 
-	public boolean wrongAnswer() {
+	public boolean questionWronglyAnswered() {
 		print("Question was incorrectly answered");
 		print(getCurrentPlayer() + " was sent to the penalty box");
 		placeCurrentPlayerInPenaltyBox();
