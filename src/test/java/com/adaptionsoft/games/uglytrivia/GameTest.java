@@ -87,10 +87,10 @@ class GameTest {
     }
 
     @Test
-    void roll_currentPlayerOutsidePenaltyBoxInitialPositionIs11AndRollIs1_playerPositionIs0() {
+    void roll_currentPlayerOutsidePenaltyBoxInitialPositionIs11AndRollIs1_playerPositionChangesTo0() {
         // Given
         Game game = Game.newGame(List.of("Joe", "Jane"));
-        game.settCurrentPlayerPositionTest(11);
+        game.setCurrentPlayerPositionTest(11);
         int diceValue = 1;
 
 
@@ -99,6 +99,19 @@ class GameTest {
 
         // Then
         assertEquals(0, game.getCurrentPlayerPositionTest());
+    }
+
+    @Test
+    void roll_currentPlayerInPenaltyBoxDiceIsEven_playerRemainsInPenaltyBox() {
+        // Given
+        Game game = Game.newGame(List.of("Joe", "Jane"));
+        game.setCurrentPlayer("Joe");
+        game.placeCurrentPlayerInPenaltyBoxTest();
+
+        // When
+        game.roll(4);
+
+        assertTrue(game.isPlayerInPenaltyBoxTest("Joe"));
     }
 
     private static Stream<List<String>> aGameMustHaveUniquePlayersNames() {

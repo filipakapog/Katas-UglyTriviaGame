@@ -129,13 +129,13 @@ public class Game {
 		return places.get(currentPlayer);
 	}
 
-	/* Used in tests*/
+	/* Used in tests */
 	Integer getCurrentPlayerPositionTest() {
 		return getCurrentPlayerPosition();
 	}
 
-	/* Used in tests*/
-	void settCurrentPlayerPositionTest(int position) {
+	/* Used in tests */
+	void setCurrentPlayerPositionTest(int position) {
 		places.set(currentPlayer, position);
 	}
 
@@ -145,6 +145,11 @@ public class Game {
 
 	private boolean isCurrentPlayerInPenaltyBox() {
 		return Boolean.TRUE.equals(inPenaltyBox.get(currentPlayer));
+	}
+
+	/* Used in tests */
+	boolean isPlayerInPenaltyBoxTest(String playerName) {
+		return inPenaltyBox.get(players.indexOf(playerName));
 	}
 
 	private void askQuestion() {
@@ -213,6 +218,11 @@ public class Game {
 		if (currentPlayer == players.size()) currentPlayer = 0;
 	}
 
+	/* Used in tests */
+	void placeCurrentPlayerInPenaltyBoxTest() {
+		placeCurrentPlayerInPenaltyBox();
+	}
+
 	private void placeCurrentPlayerInPenaltyBox() {
 		inPenaltyBox.set(currentPlayer, true);
 	}
@@ -223,5 +233,10 @@ public class Game {
 
 	private Integer getCurrentPlayersNrOfCoins() {
 		return purses.get(currentPlayer);
+	}
+
+	/* Used in tests */
+	void setCurrentPlayer(String playerName) {
+		currentPlayer = players.indexOf(playerName);
 	}
 }
